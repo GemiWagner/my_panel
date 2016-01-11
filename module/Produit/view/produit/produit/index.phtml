@@ -1,0 +1,41 @@
+<?php
+use Zend\Session\Container;
+
+$title = 'Produits';
+$this->headTitle($title);
+$session = new Container('User');
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>" id="button">Logout</a>
+    <?php if($session->email == 'admin@gmail.com'){				//seul l'admin paut ajouter un produit
+		echo '<a href="'.$this->url('produit', array('action'=>'add')).'" id="button">Ajouter nouveau produit</a>';
+	} ?>
+</p>
+
+<table class="tableform">
+    <tr>
+		<th>N°</th><th>Designation</th>
+		<th>Prix Unitaire</th><th>Tva</th>
+		<th>Quantite</th>
+		<?php if($session->email == 'admin@gmail.com'){			//seul l'admin paut modifier et supprimer un produit
+				echo '<th>Modification</th>';
+				echo '<th>Suppression</th>';
+		} ?>
+		<th>Ajouter au panier</th>
+	</tr>
+	<?php foreach($produits as $produit) : ?>
+			<tr><td><?php echo $this->escapeHtml($produit->id); ?></td>
+				<td><?php echo $this->escapeHtml($produit->designation); ?></td>
+				<td><?php echo $this->escapeHtml($produit->prixUnitaire); ?></td>
+				<td><?php echo $this->escapeHtml($produit->tva); ?></td>
+				<td><?php echo $this->escapeHtml($produit->quantite); ?></td>
+				<?php
+				if($session->email == 'admin@gmail.com'){ 			//seul l'admin paut modifier et supprimer un produit   ?>
+					<td><a href="<?php echo $this->url('produit', array('action'=>'edit', 'id' => $produit->id));?>">Modifier</a></td>
+					<td><a href="<?php echo $this->url('produit', array('action'=>'delete','id'=>$produit->id));?>">Supprimer</a></td>
+				<?php }	?>
+				<td><a href="<?php echo $this->url('produit', array('action'=>'addPanier','id'=>$produit->id));?>">Ajouter</a></td>
+			</tr>
+	<?php endforeach; ?>
+</table>

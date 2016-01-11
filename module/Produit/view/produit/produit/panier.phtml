@@ -1,0 +1,27 @@
+<?php
+
+$title = 'Panier';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>" id="button">Logout</a>
+    <a href="<?php echo $this->url('produit', array('action'=>'index'));?>" id="button">Retour à la liste de produits</a>
+</p>
+
+<table class="tableform">
+    <tr>
+		<th>N°</th><th>Designation</th>
+		<th>Prix Unitaire</th><th>Tva</th>
+		<th>Quantite</th>
+	</tr>
+	<?php foreach($produits as $produit) : ?>
+			<tr><td><?php echo $this->escapeHtml($produit->id); ?></td>
+				<td><?php echo $this->escapeHtml($produit->designation); ?></td>
+				<td><?php echo $this->escapeHtml($produit->prixUnitaire); ?></td>
+				<td><?php echo $this->escapeHtml($produit->tva); ?></td>
+				<td><?php echo $this->escapeHtml($produit->quantite); ?></td>
+				<td><a href="<?php echo $this->url('produit', array('action'=>'addPanier','id'=>$produit->id));?>">Ajouter</a></td>
+			</tr>
+	<?php endforeach; ?>
+</table>
