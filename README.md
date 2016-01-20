@@ -1,1 +1,1 @@
-# my_panel
+Pour le readme, voir la feuille rendue en cours
